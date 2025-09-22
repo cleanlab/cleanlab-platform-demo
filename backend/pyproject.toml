@@ -1,0 +1,40 @@
+[project]
+name = "cleanlab-demo"
+version = "0.1.0"
+description = "Build a reliable RAG application with Cleanlab"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "cleanlab-codex==1.0.29",
+    "fastapi[standard]>=0.116.2",
+    "llama-index-core>=0.14.2",
+    "llama-index-embeddings-openai>=0.3.1",
+    "openai>=1.108.1",
+    "pydantic-settings>=2.10.1",
+    "python-dotenv>=1.1.0",
+]
+
+[tool.ruff]
+line-length = 120
+lint.select = [
+    # pycodestyle
+    "E",
+    # Pyflakes
+    "F",
+    # pyupgrade
+    "UP",
+    # flake8-bugbear
+    "B",
+    # flake8-simplify
+    "SIM",
+    # isort
+    "I",
+    # whitespace at EOL
+    "W291",
+]
+
+[dependency-groups]
+dev = [
+    "mypy>=1.15.0",
+    "ruff>=0.11.4",
+]
