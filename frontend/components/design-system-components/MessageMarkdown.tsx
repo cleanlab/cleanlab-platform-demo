@@ -280,25 +280,6 @@ const markdownComponents: any = {
   }
 } as const
 
-// Normalize ordered list markers so that lines starting with "1) " are
-// converted to the CommonMark style "1. ". This helps react-markdown parse
-// them as ordered lists. We avoid transforming content inside fenced code blocks.
-const normalizeOrderedListMarkers = (markdown: string) => {
-  let inCodeFence = false
-  const fenceRegex = /^\s*```/
-  return markdown
-    .split('\n')
-    .map(line => {
-      if (fenceRegex.test(line)) {
-        inCodeFence = !inCodeFence
-        return line
-      }
-      if (inCodeFence) return line
-      return line.replace(/^(\s*)(\d+)\)\s+/, '$1$2. ')
-    })
-    .join('\n')
-}
-
 const MessageMarkdown = ({
   children,
   className,
@@ -310,7 +291,6 @@ const MessageMarkdown = ({
   allowHtml?: boolean
   textSize?: MarkdownTextSize
 }) => {
-  const normalizedChildren = normalizeOrderedListMarkers(children)
   return (
     <MarkdownContext.Provider value={textSize}>
       <MemoizedReactMarkdown
@@ -327,7 +307,7 @@ const MessageMarkdown = ({
         }
         components={markdownComponents}
       >
-        {normalizedChildren}
+        {children}
       </MemoizedReactMarkdown>
     </MarkdownContext.Provider>
   )
